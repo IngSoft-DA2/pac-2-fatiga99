@@ -1,0 +1,48 @@
+<div class="container my-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">Reflection - DLL Importers</h2>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-info mb-4">
+        <strong>Accesos a esta página:</strong> {{ accessCount }} / 20
+      </div>
+
+      <button 
+        class="btn btn-primary btn-lg mb-4" 
+        (click)="loadDlls()" 
+        [disabled]="isLoading">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+        {{ isLoading ? 'Cargando...' : 'Obtener DLLs' }}
+      </button>
+
+      <div *ngIf="isLoading" class="text-center my-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-3 text-muted">Escaneando DLLs en el servidor...</p>
+      </div>
+
+      <div *ngIf="isError" class="alert alert-danger" role="alert">
+        <h5 class="alert-heading"> Error</h5>
+        <p>No se pudo conectar con el servidor. Verifica que el backend esté corriendo.</p>
+      </div>
+
+      <div *ngIf="isEmpty" class="alert alert-warning" role="alert">
+        <h5 class="alert-heading">Sin resultados</h5>
+        <p>No se encontraron DLLs que implementen ImporterInterface en la carpeta reflection/</p>
+      </div>
+
+      <div *ngIf="hasData">
+        <h4 class="mb-3">DLLs Encontradas ({{ dllNames.length }})</h4>
+        <ul class="list-group">
+          <li *ngFor="let dll of dllNames" class="list-group-item">
+            <i class="bi bi-file-earmark-binary me-2"></i>
+            <strong>{{ dll }}</strong>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
